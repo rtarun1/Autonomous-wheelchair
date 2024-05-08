@@ -1,0 +1,30 @@
+<launch>
+
+    Start RTAB-map launch file, localization mode 
+    <include file="$(find my_navigation)/launch/rtab_map.launch" />
+
+    <remap from="map" to="/zed/map" />
+    <!-- 
+    <arg name="cmd_vel_topic" default="/cmd_vel" />
+-->
+    <remap from="move_base/current_goal" to="move_base_simple/goal"/>
+
+    <!-- Launch the move_base node with the specified config files -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+       <!-- <param name="base_global_planner" value="global_planner/GlobalPlanner" /> -->
+
+        <rosparam file="$(find my_navigation)/params/costmap_common_params.yaml"       command="load" ns="global_costmap" />
+        <rosparam file="$(find my_navigation)/params/costmap_common_params.yaml"       command="load" ns="local_costmap" />
+        <rosparam file="$(find my_navigation)/params/costmap_local_params.yaml"        command="load" />
+        <rosparam file="$(find my_navigation)/params/costmap_global_params.yaml"       command="load" />
+        <rosparam file="$(find my_navigation)/params/base_local_planner_params.yaml"   command="load" />
+       <!--  <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/> -->
+
+    </node>
+
+
+
+    
+</launch>
+
